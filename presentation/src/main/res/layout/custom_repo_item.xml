@@ -52,7 +52,7 @@
                 android:minHeight="@dimen/dp_32"
                 android:paddingStart="@dimen/dp_2"
                 android:paddingEnd="@dimen/dp_2"
-                android:text="@{repo.stars}"
+                android:text="@{repo.stargazersCount}"
                 android:textAppearance="?android:attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

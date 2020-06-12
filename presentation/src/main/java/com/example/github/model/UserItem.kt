@@ -6,30 +6,30 @@ import com.example.github.domain.model.User
 import javax.inject.Inject
 
 data class UserItem(
-    val id: String,
-    val name: String,
-    val username: String,
-    val email: String,
-    val phone: String,
-    val address: String
+    val avatarUrl: String? = null,
+    val blog: String? = null,
+    val email: String? = null,
+    val id: Int,
+    val name: String? = null,
+    val publicRepos: Int? = null
 ) : ModelItem()
 
 class UserItemMapper @Inject constructor() : ItemMapper<User, UserItem> {
     override fun mapToPresentation(model: User): UserItem = UserItem(
+        avatarUrl = model.avatarUrl,
+        blog = model.blog,
+        email = model.email,
         id = model.id,
         name = model.name,
-        username = model.username,
-        email = model.email,
-        phone = model.phone,
-        address = model.address
+        publicRepos = model.publicRepos
     )
 
     override fun mapToDomain(modelItem: UserItem) = User(
+        avatarUrl = modelItem.avatarUrl,
+        blog = modelItem.blog,
+        email = modelItem.email,
         id = modelItem.id,
         name = modelItem.name,
-        username = modelItem.username,
-        email = modelItem.email,
-        phone = modelItem.phone,
-        address = modelItem.address
+        publicRepos = modelItem.publicRepos
     )
 }

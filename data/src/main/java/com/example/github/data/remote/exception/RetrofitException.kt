@@ -17,7 +17,7 @@ class RetrofitException(
     private val _retrofit: Retrofit?
 ) : RuntimeException(_message, _exception) {
 
-    private var _errorData: ServerErrorResponse? = null
+    private var _serverErrorResponse: ServerErrorResponse? = null
 
     companion object {
         fun httpError(url: String, response: Response<*>, retrofit: Retrofit): RetrofitException {
@@ -65,13 +65,15 @@ class RetrofitException(
     /** The Retrofit this request was executed on */
     fun getRetrofit() = _retrofit
 
-    /** The data returned from the server in the response body*/
-    fun getErrorData(): ServerErrorResponse? = _errorData
+    /** The response returned from the server in the response body */
+    fun getServerErrorResponse(): ServerErrorResponse? = _serverErrorResponse
+
+    fun getHttpCode() = _response?.code()
 
     private fun deserializeServerError() {
         if (_response?.errorBody() != null) {
             try {
-                _errorData = getErrorBodyAs(ServerErrorResponse::class.java)
+                _serverErrorResponse = getErrorBodyAs(ServerErrorResponse::class.java)
             } catch (e: IOException) {
                 Timber.e("Server error deserialization $e")
             }

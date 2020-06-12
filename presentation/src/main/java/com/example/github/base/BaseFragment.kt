@@ -1,14 +1,12 @@
 package com.example.github.base
 
-import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.Size
 import androidx.core.content.ContextCompat
@@ -16,14 +14,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
-import com.example.github.domain.annotation.Action
-import com.example.github.domain.annotation.Redirect
-import com.example.github.extension.setVisible
+import com.example.github.BR
+import com.example.github.R
 import com.example.github.extension.showDialog
 import com.example.github.util.Permission
 import com.example.github.util.autoCleared
-import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -31,8 +26,6 @@ import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFragment(),
     EasyPermissions.PermissionCallbacks {
-
-    abstract val bindingVariable: Int
 
     abstract val viewModel: V
 
@@ -42,10 +35,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFrag
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    var viewDataBinding by autoCleared<T>()
+    private var errorMessageDialog: AlertDialog? = null
 
-    private var toast: Toast? = null
-    private var snackBar: Snackbar? = null
+    var viewDataBinding by autoCleared<T>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +56,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFrag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.apply {
-            setVariable(bindingVariable, viewModel)
+            setVariable(BR.viewModel, viewModel)
             executePendingBindings()
             lifecycleOwner = this@BaseFragment
         }
@@ -73,8 +65,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFrag
 
     override fun onStop() {
         super.onStop()
-        toast?.cancel()
-        snackBar?.dismiss()
+        errorMessageDialog?.dismiss()
     }
 
     override fun onRequestPermissionsResult(
@@ -110,71 +101,38 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : DaggerFrag
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) = Unit
 
-    @SuppressLint("ShowToast")
-    private fun subscriberException() {
+    protected open fun subscriberException() {
         viewModel.run {
-            snackBarMessage.observe(viewLifecycleOwner) { message ->
-                view?.let { snackBar = Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
-                snackBar?.show()
-            }
-
-            toastMessage.observe(viewLifecycleOwner) { message ->
-                context?.let { toast = Toast.makeText(it, message, Toast.LENGTH_SHORT) }
-                toast?.show()
-            }
-
-            inlineException.observe(viewLifecycleOwner) { tags ->
-                tags.forEach { tag ->
-                    val currentView = view?.findViewWithTag<TextView>(tag.name)
-                    currentView?.run {
-                        tag.message?.let { text = it }
-                        setVisible(true)
-                    }
-                }
-            }
-
-            alertException.observe(viewLifecycleOwner) { pair ->
-                context?.showDialog(
-                    title = pair.first,
-                    message = pair.second,
-                    positiveMessage = getString(android.R.string.ok)
-                )
-            }
-
-            dialogException.observe(viewLifecycleOwner) { dialog ->
-                context?.showDialog(
-                    title = dialog.title,
-                    message = dialog.message,
-                    positiveMessage = dialog.positiveMessage,
-                    negativeMessage = dialog.negativeMessage,
-                    positiveAction = {
-                        positiveAction(
-                            dialog.positiveAction,
-                            dialog.positiveObject
-                        )
-                    },
-                    negativeAction = {
-                        negativeAction(
-                            dialog.negativeAction,
-                            dialog.negativeObject
-                        )
-                    }
-                )
-            }
-
-            redirectException.observe(viewLifecycleOwner, Observer { redirect ->
-                redirectAction(redirect.redirect, redirect.redirectObject)
+            httpUnauthorized.observe(viewLifecycleOwner, Observer {
+                // TODO: Handle HTTP is unauthorized
+            })
+            unexpectedError.observe(viewLifecycleOwner, Observer {
+                handleErrorMessage(message = getString(R.string.unexpected_error))
+            })
+            httpUnavailableError.observe(viewLifecycleOwner, Observer {
+                handleErrorMessage(message = getString(R.string.http_unavailable_error))
+            })
+            rxMapperError.observe(viewLifecycleOwner, Observer {
+                handleErrorMessage(message = getString(R.string.rx_mapper_error))
+            })
+            httpForbiddenError.observe(viewLifecycleOwner, Observer {
+                handleErrorMessage(message = getString(R.string.http_forbidden_error))
+            })
+            httpGatewayTimeoutError.observe(viewLifecycleOwner, Observer {
+                handleErrorMessage(message = getString(R.string.no_internet_error))
+            })
+            errorMessage.observe(viewLifecycleOwner, Observer {
+                handleErrorMessage(message = it)
             })
         }
     }
 
-    open fun positiveAction(@Action action: Int?, data: Any? = null) {}
-
-    open fun negativeAction(@Action action: Int?, data: Any? = null) {}
-
-    open fun redirectAction(@Redirect redirect: Int?, data: Any? = null) {}
-
-    open fun onBackPressed() {}
+    private fun handleErrorMessage(message: String) {
+        if (errorMessageDialog?.isShowing != true) {
+            errorMessageDialog =
+                context?.showDialog(message = message, positiveMessage = getString(R.string.ok))
+        }
+    }
 
     companion object {
         private const val PERMISSION_REQUEST_CODE = Activity.RESULT_FIRST_USER + 1

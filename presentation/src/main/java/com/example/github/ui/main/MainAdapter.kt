@@ -21,7 +21,7 @@ class MainAdapter(
         }
 
         override fun areContentsTheSame(oldItem: RepoItem, newItem: RepoItem): Boolean {
-            return oldItem.name == newItem.name && oldItem.description == newItem.description
+            return oldItem.fullName == newItem.fullName && oldItem.description == newItem.description
         }
     }) {
 

@@ -1,7 +1,6 @@
 package com.example.github.domain.usecase.item
 
 import com.example.github.domain.createItem
-import com.example.github.domain.repository.ItemRepository
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before

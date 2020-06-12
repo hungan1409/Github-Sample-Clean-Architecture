@@ -1,11 +1,9 @@
 package com.example.github.data.repository
 
-import com.example.github.data.ItemRepositoryImpl
 import com.example.github.data.createItemEntity
 import com.example.github.data.model.ItemEntityMapper
 import com.example.github.data.model.OwnerEntityMapper
 import com.example.github.data.remote.api.ItemApi
-import com.example.github.data.remote.response.SearchRepoResponse
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test

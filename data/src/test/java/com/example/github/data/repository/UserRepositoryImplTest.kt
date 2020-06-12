@@ -1,7 +1,6 @@
 package com.example.github.data.repository
 
 import com.example.github.data.UserRepositoryImpl
-import com.example.github.data.local.db.AppDatabase
 import com.example.github.data.model.UserEntityMapper
 import com.example.github.data.remote.api.UserApi
 import io.reactivex.Completable

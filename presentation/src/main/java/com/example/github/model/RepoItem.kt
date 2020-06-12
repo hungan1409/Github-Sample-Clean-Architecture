@@ -1,43 +1,41 @@
 package com.example.github.model
 
-import android.os.Parcelable
 import com.example.github.base.ItemMapper
 import com.example.github.base.ModelItem
-import com.example.github.domain.model.Item
-import kotlinx.android.parcel.Parcelize
+import com.example.github.domain.model.Repo
 import javax.inject.Inject
 
-@Parcelize
 data class RepoItem(
+    val description: String? = null,
+    val forksCount: Int? = null,
     val id: Int,
-    val name: String?,
-    val fullName: String?,
-    val description: String?,
-    val url: String?,
-    val stars: String,
-    val ownerItem: OwnerItem?
-) : ModelItem(), Parcelable
+    val language: Any? = null,
+    val fullName: String? = null,
+    val stargazersCount: Int? = null,
+    val updatedAt: String? = null,
+    val watchersCount: Int? = null
+) : ModelItem()
 
-class RepoItemMapper @Inject constructor(
-    private val ownerItemMapper: OwnerItemMapper
-) : ItemMapper<Item, RepoItem> {
-    override fun mapToPresentation(model: Item) = RepoItem(
-        id = model.id,
-        name = model.name,
-        fullName = model.fullName,
+class RepoItemMapper @Inject constructor() : ItemMapper<Repo, RepoItem> {
+    override fun mapToPresentation(model: Repo) = RepoItem(
         description = model.description,
-        url = model.url,
-        stars = (model.stars ?: 0).toString(),
-        ownerItem = model.owner?.let { ownerItemMapper.mapToPresentation(it) }
+        forksCount = model.forksCount,
+        fullName = model.fullName,
+        id = model.id,
+        language = model.language,
+        stargazersCount = model.stargazersCount,
+        updatedAt = model.updatedAt,
+        watchersCount = model.watchersCount
     )
 
-    override fun mapToDomain(modelItem: RepoItem) = Item(
-        id = modelItem.id,
-        name = modelItem.name,
-        fullName = modelItem.fullName,
+    override fun mapToDomain(modelItem: RepoItem) = Repo(
         description = modelItem.description,
-        url = modelItem.url,
-        stars = modelItem.stars.toIntOrNull(),
-        owner = modelItem.ownerItem?.let { ownerItemMapper.mapToDomain(it) }
+        forksCount = modelItem.forksCount,
+        fullName = modelItem.fullName,
+        id = modelItem.id,
+        language = modelItem.language,
+        stargazersCount = modelItem.stargazersCount,
+        updatedAt = modelItem.updatedAt,
+        watchersCount = modelItem.watchersCount
     )
 }

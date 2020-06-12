@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.github.ViewModelProviderFactory
 import com.example.github.di.annotation.ViewModelKey
-import com.example.github.ui.contributor.ContributorViewModel
 import com.example.github.ui.main.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -21,9 +20,4 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ContributorViewModel::class)
-    abstract fun bindRepoDetailViewModel(contributorViewModel: ContributorViewModel): ViewModel
 }

@@ -1,38 +1,47 @@
 package com.example.github.data.model
 
-import androidx.room.Entity
 import com.example.github.data.base.EntityMapper
 import com.example.github.data.base.ModelEntity
 import com.example.github.domain.model.User
 import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
 
-@Entity(tableName = "user", primaryKeys = ["id"])
 data class UserEntity(
-    @field: SerializedName("id") val id: String,
-    @field: SerializedName("name") val name: String,
-    @field: SerializedName("username") val username: String,
-    @field: SerializedName("email") val email: String,
-    @field: SerializedName("phone") val phone: String,
-    @field: SerializedName("address") val address: String
+    @SerializedName("avatar_url")
+    val avatarUrl: String? = null,
+
+    @SerializedName("blog")
+    val blog: String? = null,
+
+    @SerializedName("email")
+    val email: String? = null,
+
+    @SerializedName("id")
+    val id: Int,
+
+    @SerializedName("name")
+    val name: String? = null,
+
+    @SerializedName("public_repos")
+    val publicRepos: Int? = null
 ) : ModelEntity()
 
 class UserEntityMapper @Inject constructor() : EntityMapper<User, UserEntity> {
-    override fun mapToDomain(entity: UserEntity): User = User(
+    override fun mapToDomain(entity: UserEntity) = User(
+        avatarUrl = entity.avatarUrl,
+        blog = entity.blog,
+        email = entity.email,
         id = entity.id,
         name = entity.name,
-        username = entity.username,
-        email = entity.email,
-        phone = entity.phone,
-        address = entity.address
+        publicRepos = entity.publicRepos
     )
 
-    override fun mapToEntity(model: User): UserEntity = UserEntity(
+    override fun mapToEntity(model: User) = UserEntity(
+        avatarUrl = model.avatarUrl,
+        blog = model.blog,
+        email = model.email,
         id = model.id,
         name = model.name,
-        username = model.username,
-        email = model.email,
-        phone = model.phone,
-        address = model.address
+        publicRepos = model.publicRepos
     )
 }

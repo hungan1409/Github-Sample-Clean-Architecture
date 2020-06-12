@@ -3,6 +3,7 @@ package com.example.github.data.remote.auth
 import android.content.Context
 import android.os.ConditionVariable
 import com.example.github.data.Authentication
+import com.example.github.data.BuildConfig
 import com.example.github.data.HttpClient
 import com.example.github.data.R
 import com.example.github.data.local.pref.AppPrefs

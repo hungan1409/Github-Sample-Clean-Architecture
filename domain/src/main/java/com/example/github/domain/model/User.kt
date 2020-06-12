@@ -1,10 +1,10 @@
 package com.example.github.domain.model
 
 data class User(
-    val id: String,
-    val name: String,
-    val username: String,
-    val email: String,
-    val phone: String,
-    val address: String
+    val avatarUrl: String? = null,
+    val blog: String? = null,
+    val email: String? = null,
+    val id: Int,
+    val name: String? = null,
+    val publicRepos: Int? = null
 ) : Model()
