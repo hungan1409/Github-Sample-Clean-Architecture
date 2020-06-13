@@ -22,5 +22,5 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUsersApi(retrofit: Retrofit): GithubApi = retrofit.create(GithubApi::class.java)
+    fun provideGithubApi(retrofit: Retrofit): GithubApi = retrofit.create(GithubApi::class.java)
 }
