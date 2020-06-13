@@ -28,14 +28,13 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         mainAdapter = MainAdapter()
         viewDataBinding.listRepo.adapter = mainAdapter
         viewModel.getFakeData()
+        viewModel.getUser()
+        viewModel.getRepos(page = 1)
     }
 
     private fun subscribeUI() = with(viewModel) {
-        fakeData.observe(viewLifecycleOwner) {
+        items.observe(viewLifecycleOwner) {
             mainAdapter.submitList(it)
-        }
-        loading.observe(viewLifecycleOwner) { loading ->
-            viewDataBinding.loading.visibility = if (loading) View.VISIBLE else View.GONE
         }
     }
 }

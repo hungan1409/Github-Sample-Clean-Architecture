@@ -2,7 +2,7 @@ package com.example.github.data.repository
 
 import com.example.github.data.UserRepositoryImpl
 import com.example.github.data.model.UserEntityMapper
-import com.example.github.data.remote.api.UserApi
+import com.example.github.data.remote.api.GithubApi
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test
@@ -12,7 +12,7 @@ import org.mockito.Mockito.mock
 class UserRepositoryImplTest {
     private lateinit var userRepositoryImpl: UserRepositoryImpl
 
-    private val userApiMock = mock(UserApi::class.java)
+    private val userApiMock = mock(GithubApi::class.java)
     private val appDatabaseMock = mock(AppDatabase::class.java)
     private val userEntityMapper = UserEntityMapper()
 
