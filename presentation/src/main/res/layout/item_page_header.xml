@@ -8,8 +8,10 @@
             type="com.example.github.model.PageHeaderItem" />
     </data>
 
-    <TextView
-        android:layout_width="match_parent"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
         android:layout_height="wrap_content"
-        android:text="Page header" />
+        android:text="@string/page" />
 </layout>

@@ -1,6 +1,5 @@
 package com.example.github.ui.main
 
-import androidx.lifecycle.MutableLiveData
 import com.example.github.base.BaseViewModel
 import com.example.github.base.ModelItem
 import com.example.github.domain.usecase.GetReposUseCase
@@ -8,6 +7,7 @@ import com.example.github.domain.usecase.GetUserUseCase
 import com.example.github.extension.add
 import com.example.github.model.*
 import com.example.github.util.RxUtils
+import com.example.github.util.SingleLiveData
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -17,10 +17,10 @@ class MainViewModel @Inject constructor(
     private val repoItemMapper: RepoItemMapper
 ) : BaseViewModel() {
 
-    private val user = MutableLiveData<UserItem>()
-    private val repos = MutableLiveData<List<RepoItem>>()
+    val user = SingleLiveData<UserItem>()
+    val repos = SingleLiveData<List<RepoItem>>()
 
-    val items = MutableLiveData<List<ModelItem>>()
+    val items = SingleLiveData<List<ModelItem>>()
 
     fun getFakeData() {
         Thread {
@@ -41,6 +41,10 @@ class MainViewModel @Inject constructor(
         }.start()
     }
 
+    private fun getPage(page: Int): PageHeaderItem {
+        return PageHeaderItem(page)
+    }
+
     fun getUser(id: String = USER_ID_DEFAULT) {
         getUserUseCase.createObservable(GetUserUseCase.Params(id))
             .compose(RxUtils.applySingleScheduler(isLoading))
@@ -54,9 +58,21 @@ class MainViewModel @Inject constructor(
 
     fun getRepos(id: String = USER_ID_DEFAULT, page: Int) {
         getReposUseCase.createObservable(GetReposUseCase.Params(id, page))
-            .compose(RxUtils.applySingleScheduler(isLoading))
+            .compose(RxUtils.applySingleScheduler(isLoading)).map {
+                it.map { repo -> repoItemMapper.mapToPresentation(repo) }
+            }
             .subscribe({
-                repos.value = it.map { repo -> repoItemMapper.mapToPresentation(repo) }
+                ArrayList<ModelItem>().apply {
+                    if (!items.value.isNullOrEmpty()) {
+                        add(getPage(page))
+                        addAll(it)
+                    } else {
+                        add(user.value!!)
+                        addAll(it)
+                    }
+                    items.value = this
+                }
+
             }, {
                 setThrowable(it)
             })

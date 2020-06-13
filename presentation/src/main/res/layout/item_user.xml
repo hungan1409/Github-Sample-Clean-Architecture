@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,8 +10,101 @@
             type="com.example.github.model.UserItem" />
     </data>
 
-    <TextView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User" />
+        android:layout_margin="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_5"
+        app:strokeColor="@color/black">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_16">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewAvatar"
+                circleUrl="@{item.avatarUrl}"
+                tools.src="@drawable/ic_launcher_background"
+                android:layout_width="@dimen/dp_96"
+                android:layout_height="@dimen/dp_96"
+                android:layout_marginBottom="@dimen/dp_10"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/dp_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@{item.name}"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewAvatar"
+                tools:text="Google" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewBlog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blog"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewUser" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewContentBlog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_5"
+                android:text="@{item.blog}"
+                android:textColor="@color/blue"
+                app:layout_constraintBottom_toBottomOf="@id/textViewBlog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewBlog"
+                app:layout_constraintTop_toTopOf="@id/textViewBlog"
+                tools:text="google" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewBlog" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewContentEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_5"
+                android:text="@{item.email}"
+                android:textColor="@color/blue"
+                app:layout_constraintBottom_toBottomOf="@id/textViewEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textViewEmail"
+                app:layout_constraintTop_toTopOf="@id/textViewEmail"
+                tools:text="google" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/number_of_repository(item.publicRepos)}"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewEmail"
+                tools:text="number_of_repository : 101" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

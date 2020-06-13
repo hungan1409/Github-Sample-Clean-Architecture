@@ -27,14 +27,16 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mainAdapter = MainAdapter()
         viewDataBinding.listRepo.adapter = mainAdapter
-        viewModel.getFakeData()
         viewModel.getUser()
-        viewModel.getRepos(page = 1)
     }
 
     private fun subscribeUI() = with(viewModel) {
         items.observe(viewLifecycleOwner) {
             mainAdapter.submitList(it)
         }
+        user.observe(viewLifecycleOwner) {
+            getRepos(page = 1)
+        }
+
     }
 }
