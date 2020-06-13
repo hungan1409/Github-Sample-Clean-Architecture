@@ -6,7 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.example.github.R
 import com.example.github.base.BaseFragment
-import com.example.github.binding.FragmentDataBindingComponent
 import com.example.github.databinding.FragmentMainBinding
 import com.example.github.util.autoCleared
 
@@ -19,31 +18,22 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     private var mainAdapter by autoCleared<MainAdapter>()
 
-    private var bindingComponent = FragmentDataBindingComponent(this)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         subscribeUI()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = MainAdapter(bindingComponent) { item ->
-            // open web browser of mobile device
-        }
-        this.mainAdapter = adapter
-
-        with(viewDataBinding) {
-            listRepo.adapter = mainAdapter
-        }
+        mainAdapter = MainAdapter()
+        viewDataBinding.listRepo.adapter = mainAdapter
+        viewModel.getFakeData()
     }
 
     private fun subscribeUI() = with(viewModel) {
-        data.observe(viewLifecycleOwner) {
+        fakeData.observe(viewLifecycleOwner) {
             mainAdapter.submitList(it)
         }
-
         loading.observe(viewLifecycleOwner) { loading ->
             viewDataBinding.loading.visibility = if (loading) View.VISIBLE else View.GONE
         }
