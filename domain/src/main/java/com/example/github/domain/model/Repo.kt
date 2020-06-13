@@ -2,11 +2,11 @@ package com.example.github.domain.model
 
 data class Repo(
     val description: String? = null,
-    val forksCount: Int? = null,
+    val forksCount: Int? = 0,
     val id: Int,
-    val language: Any? = null,
+    val language: String? = null,
     val fullName: String? = null,
-    val stargazersCount: Int? = null,
+    val stargazersCount: Int? = 0,
     val updatedAt: String? = null,
     val watchersCount: Int? = null
 ) : Model()

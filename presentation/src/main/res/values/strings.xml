@@ -15,11 +15,7 @@
     <string name="email">Email:</string>
     <string name="page">Page %s</string>
     <string name="name">Name: %s</string>
-    <string name="language">Language: %s</string>
-    <string name="watchers">Watchers: %s</string>
-    <string name="stars">Stars: %s</string>
-    <string name="folks">Folks: %s</string>
-    <string name="last_modified">Last modified: %s</string>
-    <string name="description">Description: %s</string>
+    <string name="no_language">---</string>
+    <string name="updated">Updated %s</string>
     <string name="number_of_repository">Number of repository: %s</string>
 </resources>

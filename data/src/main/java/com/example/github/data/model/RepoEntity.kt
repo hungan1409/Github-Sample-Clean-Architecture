@@ -11,7 +11,7 @@ data class RepoEntity(
     val description: String? = null,
 
     @SerializedName("forks_count")
-    val forksCount: Int? = null,
+    val forksCount: Int? = 0,
 
     @SerializedName("full_name")
     val fullName: String? = null,
@@ -20,10 +20,10 @@ data class RepoEntity(
     val id: Int,
 
     @SerializedName("language")
-    val language: Any? = null,
+    val language: String? = null,
 
     @SerializedName("stargazers_count")
-    val stargazersCount: Int? = null,
+    val stargazersCount: Int? = 0,
 
     @SerializedName("updated_at")
     val updatedAt: String? = null,
