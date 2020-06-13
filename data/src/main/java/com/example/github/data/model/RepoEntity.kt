@@ -29,7 +29,7 @@ data class RepoEntity(
     val updatedAt: String? = null,
 
     @SerializedName("watchers_count")
-    val watchersCount: Int? = null
+    val watchersCount: Int? = 0
 ) : ModelEntity()
 
 class RepoEntityMapper @Inject constructor() : EntityMapper<Repo, RepoEntity> {

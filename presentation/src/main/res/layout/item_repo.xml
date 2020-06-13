@@ -106,14 +106,13 @@
                 android:id="@+id/textViewUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
                 android:text="@{@string/updated(item.convertUpdateAtToDayAgo())}"
                 android:textColor="@color/semi_gray"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_14"
                 android:visibility="@{item.updatedAt == null ? View.GONE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@id/viewPoint"
-                app:layout_constraintStart_toEndOf="@id/textViewFork"
-                app:layout_constraintTop_toTopOf="@id/viewPoint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPoint"
                 tools:text="Updated 15/10/2020" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -142,7 +141,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageViewFork"
                 android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
+                android:layout_height="@dimen/dp_12"
                 android:layout_marginStart="@dimen/dp_20"
                 android:src="@drawable/ic_fork"
                 app:layout_constraintBottom_toBottomOf="@id/textViewStar"
