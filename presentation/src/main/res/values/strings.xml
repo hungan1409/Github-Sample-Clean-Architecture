@@ -15,7 +15,6 @@
     <string name="email">Email:</string>
     <string name="page">Page %s</string>
     <string name="name">Name: %s</string>
-    <string name="no_language">---</string>
     <string name="updated">Updated %s</string>
     <string name="number_of_repository">Number of repository: %s</string>
 </resources>
