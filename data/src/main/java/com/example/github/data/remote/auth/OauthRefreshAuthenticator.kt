@@ -5,7 +5,6 @@ import android.os.ConditionVariable
 import com.example.github.data.Authentication
 import com.example.github.data.BuildConfig
 import com.example.github.data.HttpClient
-import com.example.github.data.R
 import com.example.github.data.local.pref.AppPrefs
 import com.example.github.data.model.Token
 import com.example.github.data.remote.api.OAuthApi
@@ -22,7 +21,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class OauthRefreshAuthenticator @Inject constructor(private val context: Context) : Authenticator {
+class OauthRefreshAuthenticator @Inject constructor(
+    private val context: Context
+) : Authenticator {
 
     private val prefHelper by lazy { AppPrefs(context, Gson()) }
     private val isRefreshing = AtomicBoolean(false)
@@ -105,7 +106,7 @@ class OauthRefreshAuthenticator @Inject constructor(private val context: Context
         val factory = GsonConverterFactory.create(gBuilder)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(context.getString(R.string.base_url))
+            .baseUrl(BuildConfig.BASE_URL)
             .client(clientBuilder.build())
             .addConverterFactory(factory)
             .build()

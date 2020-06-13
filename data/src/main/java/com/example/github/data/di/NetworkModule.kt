@@ -1,6 +1,6 @@
 package com.example.github.data.di
 
-import com.example.github.data.remote.api.UserApi
+import com.example.github.data.remote.api.GithubApi
 import com.example.github.data.remote.builder.RetrofitBuilder
 import com.example.github.data.remote.interceptor.HeaderInterceptor
 import dagger.Module
@@ -22,5 +22,5 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUsersApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+    fun provideGithubApi(retrofit: Retrofit): GithubApi = retrofit.create(GithubApi::class.java)
 }

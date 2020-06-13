@@ -1,9 +1,7 @@
 package com.example.github.data.remote.builder
 
-import android.content.Context
 import com.example.github.data.BuildConfig
 import com.example.github.data.HttpClient
-import com.example.github.data.R
 import com.example.github.data.remote.auth.OauthRefreshAuthenticator
 import com.example.github.data.remote.factory.RxErrorHandlingFactory
 import okhttp3.Authenticator
@@ -17,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RetrofitBuilder @Inject constructor(private val context: Context) {
+class RetrofitBuilder @Inject constructor() {
     private var connectionTimeout = HttpClient.CONNECT_TIMEOUT
     private var writeTimeout = HttpClient.WRITE_TIMEOUT
     private var readTimeout = HttpClient.READ_TIMEOUT
@@ -26,7 +24,7 @@ class RetrofitBuilder @Inject constructor(private val context: Context) {
     private var logEnable: Boolean = BuildConfig.DEBUG
     private var isSupportAuthorization = false
     private var authenticator: Authenticator? = null
-    private var baseUrl: String = context.getString(R.string.base_url)
+    private var baseUrl: String = BuildConfig.BASE_URL
 
     @Inject
     lateinit var oauthRefreshAuthenticator: OauthRefreshAuthenticator
