@@ -13,9 +13,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_5"
         app:cardCornerRadius="@dimen/dp_5"
-        app:strokeColor="@color/black">
+        app:strokeColor="@color/semi_gray">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

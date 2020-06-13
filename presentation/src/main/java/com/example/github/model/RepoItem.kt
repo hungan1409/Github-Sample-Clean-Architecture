@@ -3,18 +3,28 @@ package com.example.github.model
 import com.example.github.base.ItemMapper
 import com.example.github.base.ModelItem
 import com.example.github.domain.model.Repo
+import com.example.github.util.convertDateToDay
 import javax.inject.Inject
 
 data class RepoItem(
     val description: String? = null,
-    val forksCount: Int? = null,
+    val forksCount: Int? = 0,
     val id: Int,
-    val language: Any? = null,
+    val language: String? = null,
     val fullName: String? = null,
-    val stargazersCount: Int? = null,
+    val stargazersCount: Int? = 0,
     val updatedAt: String? = null,
-    val watchersCount: Int? = null
-) : ModelItem()
+    val watchersCount: Int? = 0
+) : ModelItem() {
+    fun convertUpdateAtToDayAgo(): String? {
+        return if (updatedAt.isNullOrBlank()) {
+            ""
+        } else {
+            convertDateToDay(updatedAt)
+        }
+    }
+}
+
 
 class RepoItemMapper @Inject constructor() : ItemMapper<Repo, RepoItem> {
     override fun mapToPresentation(model: Repo) = RepoItem(

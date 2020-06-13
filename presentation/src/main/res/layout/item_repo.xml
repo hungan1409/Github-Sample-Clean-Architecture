@@ -8,85 +8,159 @@
         <variable
             name="item"
             type="com.example.github.model.RepoItem" />
+
+        <import type="android.view.View" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:padding="@dimen/dp_10">
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5"
+        app:cardCornerRadius="@dimen/dp_5"
+        app:strokeColor="@color/semi_gray">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewTitle"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{@string/name(item.fullName)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginBottom="@dimen/dp_10"
+            android:padding="@dimen/dp_10">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewLanguage"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/language(item.language)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.fullName}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="google/.github" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewWatchers"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/watchers(item.watchersCount)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewLanguage" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.0"
+                android:maxLines="3"
+                android:text="@{item.description}"
+                android:textColor="@color/semi_gray"
+                android:textSize="@dimen/sp_15"
+                android:visibility="@{item.description == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+                tools:text="Updating your profile with your name, location, and a profile picture helps other GitHub users get to know you." />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewStars"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/stars(item.stargazersCount)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewWatchers" />
+            <View
+                android:id="@+id/viewPoint"
+                android:layout_width="@dimen/dp_5"
+                android:layout_height="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/bg_circle_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewFolks"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/folks(item.forksCount)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewStars" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_2"
+                android:text="@{item.language == null ? @string/no_language : item.language}"
+                android:textColor="@color/semi_gray"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintBottom_toBottomOf="@id/viewPoint"
+                app:layout_constraintStart_toEndOf="@id/viewPoint"
+                app:layout_constraintTop_toTopOf="@id/viewPoint"
+                tools:text="Kotlin" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewLastModified"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/last_modified"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewFolks" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageViewStar"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginStart="@dimen/dp_20"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="@id/textViewWatch"
+                app:layout_constraintStart_toEndOf="@id/textViewWatch"
+                app:layout_constraintTop_toTopOf="@id/textViewWatch" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.0"
-            android:maxLines="3"
-            android:text="@{@string/description(item.description)}"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewLastModified"
-            tools:text="Description: to show the individual deprecation warnings." />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_2"
+                android:text="@{String.valueOf(item.stargazersCount)}"
+                android:textColor="@color/semi_gray"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewStar"
+                app:layout_constraintStart_toEndOf="@id/imageViewStar"
+                app:layout_constraintTop_toTopOf="@id/imageViewStar"
+                tools:text="100" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@{@string/updated(item.convertUpdateAtToDayAgo())}"
+                android:textColor="@color/semi_gray"
+                android:textSize="@dimen/sp_14"
+                android:visibility="@{item.updatedAt == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPoint"
+                tools:text="Updated 15/10/2020" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageViewWatch"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginStart="@dimen/dp_20"
+                android:src="@drawable/ic_watch"
+                app:layout_constraintBottom_toBottomOf="@id/viewPoint"
+                app:layout_constraintStart_toEndOf="@+id/textViewLanguage"
+                app:layout_constraintTop_toTopOf="@+id/viewPoint" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewWatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_2"
+                android:text="@{String.valueOf(item.watchersCount)}"
+                android:textColor="@color/semi_gray"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewWatch"
+                app:layout_constraintStart_toEndOf="@+id/imageViewWatch"
+                app:layout_constraintTop_toTopOf="@+id/imageViewWatch"
+                tools:text="100" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageViewFork"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_12"
+                android:layout_marginStart="@dimen/dp_20"
+                android:src="@drawable/ic_fork"
+                app:layout_constraintBottom_toBottomOf="@id/textViewStar"
+                app:layout_constraintStart_toEndOf="@id/textViewStar"
+                app:layout_constraintTop_toTopOf="@id/textViewStar" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewFork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_2"
+                android:text="@{String.valueOf(item.forksCount)}"
+                android:textColor="@color/semi_gray"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewFork"
+                app:layout_constraintStart_toEndOf="@id/imageViewFork"
+                app:layout_constraintTop_toTopOf="@id/imageViewFork"
+                tools:text="100" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
