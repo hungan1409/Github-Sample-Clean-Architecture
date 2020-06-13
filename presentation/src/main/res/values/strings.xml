@@ -9,4 +9,17 @@
     <string name="error">Error</string>
     <string name="rx_mapper_error">An error occurred, please try again later</string>
     <string name="ok">OK</string>
+
+    <!-- Main -->
+    <string name="blog">Blog:</string>
+    <string name="email">Email:</string>
+    <string name="page">Page %s</string>
+    <string name="name">Name: %s</string>
+    <string name="language">Language: %s</string>
+    <string name="watchers">Watchers: %s</string>
+    <string name="stars">Stars: %s</string>
+    <string name="folks">Folks: %s</string>
+    <string name="last_modified">Last modified: %s</string>
+    <string name="description">Description: %s</string>
+    <string name="number_of_repository">Number of repository: %s</string>
 </resources>

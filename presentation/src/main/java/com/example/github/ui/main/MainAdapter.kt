@@ -37,7 +37,9 @@ class MainAdapter : BaseRecyclerAdapter<ModelItem>(DIFF_CALLBACK) {
     override fun bind(binding: ViewDataBinding, item: ModelItem) {
         when (binding) {
             is ItemUserBinding -> {
-                binding.item = item as UserItem
+                binding.apply {
+                    this.item = item as UserItem
+                }
             }
 
             is ItemPageHeaderBinding -> {
