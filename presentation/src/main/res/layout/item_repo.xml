@@ -18,7 +18,7 @@
         android:layout_marginStart="@dimen/dp_4"
         android:layout_marginEnd="@dimen/dp_4"
         android:layout_marginBottom="@dimen/dp_4"
-        app:cardCornerRadius="@dimen/dp_4"
+        app:cardCornerRadius="@dimen/dp_16"
         app:strokeColor="@color/semi_gray">
 
         <androidx.constraintlayout.widget.ConstraintLayout

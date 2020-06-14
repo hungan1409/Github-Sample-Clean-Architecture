@@ -23,7 +23,7 @@ data class UserEntity(
     val name: String? = null,
 
     @SerializedName("public_repos")
-    val publicRepos: Int? = null
+    val publicRepos: Int? = 0
 ) : ModelEntity()
 
 class UserEntityMapper @Inject constructor() : EntityMapper<User, UserEntity> {

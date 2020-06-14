@@ -68,6 +68,7 @@ class MainViewModel @Inject constructor(
                         addAll(it)
                     } else {
                         add(user.value!!)
+                        add(getPage(page))
                         addAll(it)
                     }
                     items.value = this

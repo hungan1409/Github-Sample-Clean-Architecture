@@ -11,8 +11,6 @@
     <string name="ok">OK</string>
 
     <!-- Main -->
-    <string name="blog">Blog:</string>
-    <string name="email">Email:</string>
     <string name="page">Page %s</string>
     <string name="name">Name: %s</string>
     <string name="updated">Updated %s</string>
