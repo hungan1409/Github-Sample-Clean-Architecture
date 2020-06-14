@@ -35,7 +35,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                     val lastPosition = layoutManager.findLastVisibleItemPosition()
-                    if (lastPosition == mainAdapter.itemCount - 1) {
+                    if (lastPosition == mainAdapter.itemCount - REMAINING_ITEM_REFRESH) {
                         viewModel?.loadMore()
                     }
                 }
@@ -51,5 +51,9 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         items.observe(viewLifecycleOwner) {
             mainAdapter.submitList(it)
         }
+    }
+
+    companion object {
+        private const val REMAINING_ITEM_REFRESH = 5
     }
 }
