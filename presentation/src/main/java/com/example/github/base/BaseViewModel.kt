@@ -43,7 +43,7 @@ abstract class BaseViewModel constructor(
         isLoading.value = false
     }
 
-    fun isLoading() = isLoading.value
+    fun isLoading() = isLoading.value ?: false
     fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }

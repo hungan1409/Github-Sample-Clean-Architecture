@@ -1,13 +1,16 @@
 package com.example.github.ui.main
 
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.github.base.BaseViewModel
 import com.example.github.base.ModelItem
+import com.example.github.domain.model.Repo
 import com.example.github.domain.usecase.repo.GetReposUseCase
 import com.example.github.domain.usecase.user.GetUserUseCase
 import com.example.github.extension.add
 import com.example.github.model.*
 import com.example.github.util.RxUtils
-import com.example.github.util.SingleLiveData
+import io.reactivex.SingleTransformer
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -17,70 +20,105 @@ class MainViewModel @Inject constructor(
     private val repoItemMapper: RepoItemMapper
 ) : BaseViewModel() {
 
-    val user = SingleLiveData<UserItem>()
-    val repos = SingleLiveData<List<RepoItem>>()
+    private val user = MutableLiveData<UserItem>()
+    private val repos = MutableLiveData<List<RepoItem>>()
+    private val currentPage = MutableLiveData<Int>()
+    private val currentList = mutableListOf<ModelItem>()
+    private var nextPage = -1
 
-    val items = SingleLiveData<List<ModelItem>>()
+    val items = MediatorLiveData<List<ModelItem>>()
+    val isRunningLoadMore = MutableLiveData<Boolean>().apply { value = false }
+    var isRefresh = false
 
-    fun getFakeData() {
-        Thread {
-            Thread.sleep(2000)
-            items.postValue(
-                listOf(
-                    UserItem("", "", "", 1, "", 1),
-                    PageHeaderItem(1),
-                    RepoItem("", 1, 1, "", "", 1, null),
-                    RepoItem("", 1, 2, "", "", 1, null),
-                    RepoItem("", 1, 3, "", "", 1, null),
-                    PageHeaderItem(2),
-                    RepoItem("", 1, 4, "", "", 1, null),
-                    RepoItem("", 1, 5, "", "", 1, null),
-                    RepoItem("", 1, 6, "", "", 1, null)
-                )
-            )
-        }.start()
+    init {
+        items.addSource(user) { userItem ->
+            clearToRefresh()
+            currentList.add(0, userItem)
+            items.value = currentList.toList()
+        }
+
+        items.addSource(currentPage) { page ->
+            if (page != null && page != FIRST_PAGE) {
+                clearToRefresh()
+                currentList.add(PageHeaderItem(page))
+                items.value = currentList.toList()
+            }
+        }
+
+        items.addSource(repos) { repoItems ->
+            clearToRefresh()
+            currentList.addAll(repoItems)
+            items.value = currentList.toList()
+        }
     }
 
-    private fun getPage(page: Int): PageHeaderItem {
-        return PageHeaderItem(page)
+    fun init() {
+        getUser()
+        getRepos()
     }
 
-    fun getUser(id: String = USER_ID_DEFAULT) {
+    fun refresh() {
+        isRefresh = true
+        nextPage = -1
+        init()
+    }
+
+    fun loadMore() {
+        getRepos(page = nextPage)
+    }
+
+    private fun getUser(id: String = USER_ID_DEFAULT) {
         getUserUseCase.createObservable(GetUserUseCase.Params(id))
             .compose(RxUtils.applySingleScheduler(isLoading))
             .subscribe({
                 user.value = userItemMapper.mapToPresentation(it)
             }, {
+                isRefresh = false
                 setThrowable(it)
             })
             .add(this)
     }
 
-    fun getRepos(id: String = USER_ID_DEFAULT, page: Int) {
+    private fun getRepos(id: String = USER_ID_DEFAULT, page: Int = FIRST_PAGE) {
+        if (!hasLoadMore() && page != FIRST_PAGE) {
+            return
+        }
+        val transformer: SingleTransformer<List<Repo>, List<Repo>> = if (page == FIRST_PAGE) {
+            RxUtils.applySingleScheduler(isLoading)
+        } else {
+            RxUtils.applySingleScheduler(isRunningLoadMore)
+        }
         getReposUseCase.createObservable(GetReposUseCase.Params(id, page))
-            .compose(RxUtils.applySingleScheduler(isLoading)).map {
-                it.map { repo -> repoItemMapper.mapToPresentation(repo) }
-            }
+            .compose(transformer)
             .subscribe({
-                ArrayList<ModelItem>().apply {
-                    if (!items.value.isNullOrEmpty()) {
-                        add(getPage(page))
-                        addAll(it)
-                    } else {
-                        add(user.value!!)
-                        add(getPage(page))
-                        addAll(it)
-                    }
-                    items.value = this
+                if (it.isNullOrEmpty()) {
+                    nextPage = -1
+                } else {
+                    currentPage.value = page
+                    nextPage = page + 1
+                    repos.value = it.map { repo -> repoItemMapper.mapToPresentation(repo) }
                 }
-
             }, {
+                isRefresh = false
+                currentPage.value?.let { currentPage -> nextPage = currentPage + 1 }
                 setThrowable(it)
             })
             .add(this)
+    }
+
+    private fun hasLoadMore(): Boolean {
+        return nextPage != -1 && isRunningLoadMore.value == false
+    }
+
+    private fun clearToRefresh() {
+        if (isRefresh) {
+            currentList.clear()
+            isRefresh = false
+        }
     }
 
     companion object {
         private const val USER_ID_DEFAULT = "google"
+        private const val FIRST_PAGE = 1
     }
 }
