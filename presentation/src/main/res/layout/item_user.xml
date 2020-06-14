@@ -20,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/ic_background_user"
             android:padding="@dimen/dp_16">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -74,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_5"
                 android:text="@{item.blog}"
-                android:textColor="@color/semi_gray"
+                android:textColor="@color/light_gray"
                 app:layout_constraintBottom_toBottomOf="@id/imageViewBlog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageViewBlog"
@@ -96,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_5"
                 android:text="@{item.email}"
-                android:textColor="@color/semi_gray"
+                android:textColor="@color/light_gray"
                 app:layout_constraintBottom_toBottomOf="@id/imageViewEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageViewEmail"

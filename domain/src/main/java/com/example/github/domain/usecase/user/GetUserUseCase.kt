@@ -1,7 +1,8 @@
-package com.example.github.domain.usecase
+package com.example.github.domain.usecase.user
 
 import com.example.github.domain.model.User
 import com.example.github.domain.repository.UserRepository
+import com.example.github.domain.usecase.UseCase
 import io.reactivex.Single
 import javax.inject.Inject
 

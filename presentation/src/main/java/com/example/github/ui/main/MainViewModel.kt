@@ -2,8 +2,8 @@ package com.example.github.ui.main
 
 import com.example.github.base.BaseViewModel
 import com.example.github.base.ModelItem
-import com.example.github.domain.usecase.GetReposUseCase
-import com.example.github.domain.usecase.GetUserUseCase
+import com.example.github.domain.usecase.repo.GetReposUseCase
+import com.example.github.domain.usecase.user.GetUserUseCase
 import com.example.github.extension.add
 import com.example.github.model.*
 import com.example.github.util.RxUtils
