@@ -6,5 +6,5 @@ data class User(
     val email: String? = null,
     val id: Int,
     val name: String? = null,
-    val publicRepos: Int? = null
+    val publicRepos: Int? = 0
 ) : Model()

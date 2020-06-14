@@ -11,7 +11,7 @@ data class UserItem(
     val email: String? = null,
     val id: Int,
     val name: String? = null,
-    val publicRepos: Int? = null
+    val publicRepos: Int? = 0
 ) : ModelItem()
 
 class UserItemMapper @Inject constructor() : ItemMapper<User, UserItem> {

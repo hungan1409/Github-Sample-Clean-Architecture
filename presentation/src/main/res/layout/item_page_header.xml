@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,7 +12,10 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
-        android:layout_marginBottom="@dimen/dp_10"
         android:layout_height="wrap_content"
-        android:text="@string/page" />
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="@{@string/page(item.page)}"
+        android:textColor="@color/semi_gray"
+        tools:text="Page 1" />
 </layout>
