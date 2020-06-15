@@ -65,7 +65,7 @@ class MainAdapter : BaseRecyclerAdapter<ModelItem>(DIFF_CALLBACK) {
             }
 
             override fun areContentsTheSame(oldItem: ModelItem, newItem: ModelItem): Boolean {
-                return oldItem == newItem
+                return oldItem.equals(newItem)
             }
         }
     }
