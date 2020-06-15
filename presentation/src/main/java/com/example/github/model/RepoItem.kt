@@ -14,7 +14,8 @@ data class RepoItem(
     val fullName: String? = null,
     val stargazersCount: Int? = 0,
     val updatedAt: String? = null,
-    val watchersCount: Int? = 0
+    val watchersCount: Int? = 0,
+    val htmlUrl: String? = null
 ) : ModelItem() {
     fun convertUpdateAtToDayAgo(): String? {
         return if (updatedAt.isNullOrBlank()) {
@@ -35,7 +36,8 @@ class RepoItemMapper @Inject constructor() : ItemMapper<Repo, RepoItem> {
         language = model.language,
         stargazersCount = model.stargazersCount,
         updatedAt = model.updatedAt,
-        watchersCount = model.watchersCount
+        watchersCount = model.watchersCount,
+        htmlUrl = model.htmlUrl
     )
 
     override fun mapToDomain(modelItem: RepoItem) = Repo(
@@ -46,6 +48,7 @@ class RepoItemMapper @Inject constructor() : ItemMapper<Repo, RepoItem> {
         language = modelItem.language,
         stargazersCount = modelItem.stargazersCount,
         updatedAt = modelItem.updatedAt,
-        watchersCount = modelItem.watchersCount
+        watchersCount = modelItem.watchersCount,
+        htmlUrl = modelItem.htmlUrl
     )
 }
