@@ -10,7 +10,6 @@ apply {
     plugin(GradlePlugins.playService)
     plugin(GradlePlugins.fabric)
     from("../ktlint.gradle")
-    from("../googleServices.gradle")
     from("jacoco.gradle")
 }
 
@@ -101,9 +100,6 @@ dependencies {
     implementation(Libs.rxAndroid)
 
     // Binding
-//    kapt(Libs.glideCompiler)
-//    kapt(Libs.lifecycleJava8)
-//    kapt(Libs.bindingCompiler)
     kapt(Libs.daggerProcessor)
     kapt(Libs.daggerCompiler)
 
@@ -120,26 +116,18 @@ dependencies {
 
     // module
     implementation(project(Modules.domain)) {
-        exclude(group = "com.example.cleanarchitecture", module = "domain")
+        exclude(group = "com.example.github", module = "domain")
     }
     implementation(project(Modules.data)) {
-        exclude(group = "com.example.cleanarchitecture", module = "data")
+        exclude(group = "com.example.github", module = "data")
     }
 
     // Navigation
     implementation(Libs.navigationUiKtx)
     implementation(Libs.navigationFragmentKtx)
 
-    // coroutines
-    implementation(Libs.coroutinesCore)
-    implementation(Libs.coroutinesAndroid)
-
     // logging
     implementation(Libs.timber)
-
-//    androidTestImplementation (Libs.mockitoCore) {
-//        exclude(group = "net.bytebuddy")
-//    }
 
     // Dependencies for local unit tests
     testImplementation(Libs.junit)
@@ -150,14 +138,6 @@ dependencies {
     testImplementation(Libs.kotlinTest)
     testImplementation(Libs.mockitoWebServer)
     testImplementation(Libs.robolectric)
-
-    // Firebase analytics
-    implementation(Libs.firebaseCore)
-    implementation(Libs.firebaseAnalytics)
-    implementation(Libs.crashAnalytics) {
-        isTransitive = true
-    }
-
 
     // CircleImageView
     implementation(Libs.circleImageView)

@@ -94,7 +94,6 @@ dependencies {
     // Test
     testImplementation(Libs.junit)
     testImplementation(Libs.mockitoCore)
-//    testImplementation(Libs.mockitoAll)
     testImplementation(Libs.hamcrest)
     testImplementation(Libs.archTesting)
     testImplementation(Libs.stdLib)

@@ -2,7 +2,6 @@ package com.example.github.data.remote.builder
 
 import com.example.github.data.BuildConfig
 import com.example.github.data.HttpClient
-import com.example.github.data.remote.auth.OauthRefreshAuthenticator
 import com.example.github.data.remote.factory.RxErrorHandlingFactory
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -25,9 +24,6 @@ class RetrofitBuilder @Inject constructor() {
     private var isSupportAuthorization = false
     private var authenticator: Authenticator? = null
     private var baseUrl: String = BuildConfig.BASE_URL
-
-    @Inject
-    lateinit var oauthRefreshAuthenticator: OauthRefreshAuthenticator
 
     /**
      * Customize time out
@@ -117,7 +113,6 @@ class RetrofitBuilder @Inject constructor() {
 
             val auth: Authenticator? = when {
                 authenticator != null -> authenticator
-                isSupportAuthorization -> oauthRefreshAuthenticator
                 else -> null
             }
 
