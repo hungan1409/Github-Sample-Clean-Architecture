@@ -27,8 +27,7 @@ class MainViewModel @Inject constructor(
     private var nextPage = -1
 
     val items = MediatorLiveData<List<ModelItem>>()
-    val isRunningLoadMore = MutableLiveData<Boolean>().apply { value = false }
-    var isRefresh = false
+    val isRefresh = MutableLiveData<Boolean>().apply { value = false }
 
     init {
         items.addSource(user) { userItem ->
@@ -58,7 +57,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun refresh() {
-        isRefresh = true
+        isRefresh.value = true
         nextPage = -1
         init()
     }
@@ -73,7 +72,7 @@ class MainViewModel @Inject constructor(
             .subscribe({
                 user.value = userItemMapper.mapToPresentation(it)
             }, {
-                isRefresh = false
+                isRefresh.value = false
                 setThrowable(it)
             })
             .add(this)
@@ -83,10 +82,10 @@ class MainViewModel @Inject constructor(
         if (!hasLoadMore() && page != FIRST_PAGE) {
             return
         }
-        val transformer: SingleTransformer<List<Repo>, List<Repo>> = if (page == FIRST_PAGE) {
+        val transformer: SingleTransformer<List<Repo>, List<Repo>> = if (isRefresh.value == false) {
             RxUtils.applySingleScheduler(isLoading)
         } else {
-            RxUtils.applySingleScheduler(isRunningLoadMore)
+            RxUtils.applySingleScheduler()
         }
         getReposUseCase.createObservable(GetReposUseCase.Params(id, page))
             .compose(transformer)
@@ -99,7 +98,7 @@ class MainViewModel @Inject constructor(
                     repos.value = it.map { repo -> repoItemMapper.mapToPresentation(repo) }
                 }
             }, {
-                isRefresh = false
+                isRefresh.value = false
                 currentPage.value?.let { currentPage -> nextPage = currentPage + 1 }
                 setThrowable(it)
             })
@@ -107,13 +106,13 @@ class MainViewModel @Inject constructor(
     }
 
     private fun hasLoadMore(): Boolean {
-        return nextPage != -1 && isRunningLoadMore.value == false
+        return nextPage != -1
     }
 
     private fun clearToRefresh() {
-        if (isRefresh) {
+        if (isRefresh.value == true) {
             currentList.clear()
-            isRefresh = false
+            isRefresh.value = false
         }
     }
 
