@@ -1,5 +1,6 @@
 package com.example.github.domain.usecase.user
 
+import com.example.github.domain.Constants
 import com.example.github.domain.model.User
 import com.example.github.domain.repository.UserRepository
 import com.example.github.domain.usecase.UseCase
@@ -12,7 +13,7 @@ class GetUserUseCase @Inject constructor(
 
     override fun createObservable(params: Params?): Single<User> {
         return when (params) {
-            null -> throw Throwable("Params must be not null")
+            null -> Single.error { Throwable(Constants.PARAMS_ERROR_MSG) }
             else -> userRepository.getUser(params.id)
         }
     }

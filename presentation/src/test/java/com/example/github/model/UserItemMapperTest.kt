@@ -15,32 +15,33 @@ class UserItemMapperTest {
 
     @Test
     fun mapPresentationToDomainTest() {
-        // generate user entity
+        // generate user
         val item = createUserItem()
-        // mapper
+
+        // mapper to domain
         val model = userItemMapper.mapToDomain(item)
 
         assert(item.id == model.id)
+        assert(item.avatarUrl == model.avatarUrl)
+        assert(item.blog == model.blog)
         assert(item.name == model.name)
-        assert(item.username == model.username)
-        assert(item.address == model.address)
         assert(item.email == model.email)
-        assert(item.phone == model.phone)
+        assert(item.publicRepos == model.publicRepos)
     }
 
     @Test
     fun mapDomainToPresentationTest() {
-        // generate model
+        // generate entity model
         val model = createUser()
 
-        // mapper to entity
+        // mapper to presentation
         val item = userItemMapper.mapToPresentation(model)
 
         assert(item.id == model.id)
+        assert(item.avatarUrl == model.avatarUrl)
+        assert(item.blog == model.blog)
         assert(item.name == model.name)
-        assert(item.username == model.username)
-        assert(item.address == model.address)
         assert(item.email == model.email)
-        assert(item.phone == model.phone)
+        assert(item.publicRepos == model.publicRepos)
     }
 }

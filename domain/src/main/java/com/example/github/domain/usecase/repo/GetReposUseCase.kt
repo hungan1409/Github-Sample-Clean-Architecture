@@ -1,5 +1,6 @@
 package com.example.github.domain.usecase.repo
 
+import com.example.github.domain.Constants
 import com.example.github.domain.model.Repo
 import com.example.github.domain.repository.UserRepository
 import com.example.github.domain.usecase.UseCase
@@ -12,7 +13,7 @@ class GetReposUseCase @Inject constructor(
 
     override fun createObservable(params: Params?): Single<List<Repo>> {
         return when (params) {
-            null -> throw Throwable("Params must be not null")
+            null -> Single.error { Throwable(Constants.PARAMS_ERROR_MSG) }
             else -> userRepository.getRepos(params.id, params.page)
         }
     }

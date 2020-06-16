@@ -21,11 +21,11 @@ class UserMapperTest {
         val model = userEntityMapper.mapToDomain(entity)
 
         assert(entity.id == model.id)
+        assert(entity.avatarUrl == model.avatarUrl)
+        assert(entity.blog == model.blog)
         assert(entity.name == model.name)
-        assert(entity.username == model.username)
-        assert(entity.address == model.address)
         assert(entity.email == model.email)
-        assert(entity.phone == model.phone)
+        assert(entity.publicRepos == model.publicRepos)
     }
 
     @Test
@@ -37,10 +37,10 @@ class UserMapperTest {
         val entity = userEntityMapper.mapToEntity(model)
 
         assert(entity.id == model.id)
+        assert(entity.avatarUrl == model.avatarUrl)
+        assert(entity.blog == model.blog)
         assert(entity.name == model.name)
-        assert(entity.username == model.username)
-        assert(entity.address == model.address)
         assert(entity.email == model.email)
-        assert(entity.phone == model.phone)
+        assert(entity.publicRepos == model.publicRepos)
     }
 }
