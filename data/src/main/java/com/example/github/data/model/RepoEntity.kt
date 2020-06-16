@@ -29,7 +29,10 @@ data class RepoEntity(
     val updatedAt: String? = null,
 
     @SerializedName("watchers_count")
-    val watchersCount: Int? = 0
+    val watchersCount: Int? = 0,
+
+    @SerializedName("html_url")
+    val htmlUrl: String? = null
 ) : ModelEntity()
 
 class RepoEntityMapper @Inject constructor() : EntityMapper<Repo, RepoEntity> {
@@ -41,7 +44,8 @@ class RepoEntityMapper @Inject constructor() : EntityMapper<Repo, RepoEntity> {
         language = entity.language,
         stargazersCount = entity.stargazersCount,
         updatedAt = entity.updatedAt,
-        watchersCount = entity.watchersCount
+        watchersCount = entity.watchersCount,
+        htmlUrl = entity.htmlUrl
     )
 
     override fun mapToEntity(model: Repo) = RepoEntity(
@@ -52,6 +56,7 @@ class RepoEntityMapper @Inject constructor() : EntityMapper<Repo, RepoEntity> {
         language = model.language,
         stargazersCount = model.stargazersCount,
         updatedAt = model.updatedAt,
-        watchersCount = model.watchersCount
+        watchersCount = model.watchersCount,
+        htmlUrl = model.htmlUrl
     )
 }
