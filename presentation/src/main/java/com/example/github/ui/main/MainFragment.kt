@@ -1,5 +1,7 @@
 package com.example.github.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.github.R
 import com.example.github.base.BaseFragment
 import com.example.github.databinding.FragmentMainBinding
+import com.example.github.model.RepoItem
 import com.example.github.util.autoCleared
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
@@ -28,7 +31,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainAdapter = MainAdapter()
+        mainAdapter = MainAdapter { repoItem -> onClickRepo(repoItem) }
         with(viewDataBinding) {
             recycler.adapter = mainAdapter
             recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -44,6 +47,13 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
             swipeRefresh.setOnRefreshListener {
                 viewModel?.refresh()
             }
+        }
+    }
+
+    private fun onClickRepo(repoItem: RepoItem) {
+        if (repoItem.htmlUrl.isNullOrEmpty().not()) {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(repoItem.htmlUrl ?: ""))
+            startActivity(browserIntent)
         }
     }
 

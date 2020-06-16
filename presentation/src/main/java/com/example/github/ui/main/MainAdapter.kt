@@ -15,11 +15,35 @@ import com.example.github.model.PageHeaderItem
 import com.example.github.model.RepoItem
 import com.example.github.model.UserItem
 
-class MainAdapter : BaseRecyclerAdapter<ModelItem>(DIFF_CALLBACK) {
+class MainAdapter(val onClickRepoListener: ((RepoItem) -> Unit)?) :
+    BaseRecyclerAdapter<ModelItem>(DIFF_CALLBACK) {
 
     override fun createBinding(parent: ViewGroup, viewType: Int?): ViewDataBinding {
-        return if (viewType != null && viewType != -1) {
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), viewType, parent, false)
+        if (viewType != null && viewType != -1) {
+            when (viewType) {
+                R.layout.item_repo -> {
+                    val binding = DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        viewType,
+                        parent,
+                        false
+                    ) as ItemRepoBinding
+                    binding.apply {
+                        root.setOnClickListener {
+                            item?.let {
+                                onClickRepoListener?.invoke(it)
+                            }
+                        }
+                    }
+                    return binding
+                }
+                else -> return DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    viewType,
+                    parent,
+                    false
+                )
+            }
         } else {
             throw Throwable("Not found this view type $viewType")
         }
