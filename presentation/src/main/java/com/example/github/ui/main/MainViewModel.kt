@@ -68,7 +68,7 @@ class MainViewModel @Inject constructor(
 
     private fun getUser(id: String = USER_ID_DEFAULT) {
         getUserUseCase.createObservable(GetUserUseCase.Params(id))
-            .compose(RxUtils.applySingleScheduler(isLoading))
+            .compose(RxUtils.applySingleScheduler())
             .subscribe({
                 user.value = userItemMapper.mapToPresentation(it)
             }, {
