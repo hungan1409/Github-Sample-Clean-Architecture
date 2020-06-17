@@ -44,6 +44,7 @@ object Versions {
     internal const val fabric = "1.31.0"
 
     internal const val circleImageView = "3.1.0"
+    internal const val leakCanary = "2.4"
 }
 
 object Url {
@@ -190,4 +191,7 @@ object Libs {
 
     // circleImageView
     const val circleImageView = "de.hdodenhof:circleimageview:${Versions.circleImageView}"
+
+    // LeakCanary
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
 }

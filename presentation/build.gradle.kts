@@ -139,4 +139,7 @@ dependencies {
 
     // CircleImageView
     implementation(Libs.circleImageView)
+
+    // LeakCanary
+    debugImplementation(Libs.leakCanary)
 }
