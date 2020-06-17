@@ -14,7 +14,7 @@ data class UserItem(
     val publicRepos: Int? = 0
 ) : ModelItem()
 
-class UserItemMapper @Inject constructor() : ItemMapper<User, UserItem> {
+open class UserItemMapper @Inject constructor() : ItemMapper<User, UserItem> {
     override fun mapToPresentation(model: User): UserItem = UserItem(
         avatarUrl = model.avatarUrl,
         blog = model.blog,

@@ -7,7 +7,7 @@ import com.example.github.domain.usecase.UseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
-class GetUserUseCase @Inject constructor(
+open class GetUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) : UseCase<GetUserUseCase.Params, Single<User>>() {
 

@@ -27,7 +27,7 @@ data class RepoItem(
 }
 
 
-class RepoItemMapper @Inject constructor() : ItemMapper<Repo, RepoItem> {
+open class RepoItemMapper @Inject constructor() : ItemMapper<Repo, RepoItem> {
     override fun mapToPresentation(model: Repo) = RepoItem(
         description = model.description,
         forksCount = model.forksCount,

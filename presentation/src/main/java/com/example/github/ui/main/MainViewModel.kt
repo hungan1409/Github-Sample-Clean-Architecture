@@ -20,8 +20,8 @@ class MainViewModel @Inject constructor(
     private val repoItemMapper: RepoItemMapper
 ) : BaseViewModel() {
 
-    private val user = MutableLiveData<UserItem>()
-    private val repos = MutableLiveData<List<RepoItem>>()
+    val user = MutableLiveData<UserItem>()
+    val repos = MutableLiveData<List<RepoItem>>()
     private val currentPage = MutableLiveData<Int>()
     private val currentList = mutableListOf<ModelItem>()
     private var nextPage = -1
@@ -66,7 +66,7 @@ class MainViewModel @Inject constructor(
         getRepos(page = nextPage)
     }
 
-    private fun getUser(id: String = USER_ID_DEFAULT) {
+    fun getUser(id: String = USER_ID_DEFAULT) {
         getUserUseCase.createObservable(GetUserUseCase.Params(id))
             .compose(RxUtils.applySingleScheduler())
             .subscribe({
@@ -78,7 +78,7 @@ class MainViewModel @Inject constructor(
             .add(this)
     }
 
-    private fun getRepos(id: String = USER_ID_DEFAULT, page: Int = FIRST_PAGE) {
+    fun getRepos(id: String = USER_ID_DEFAULT, page: Int = FIRST_PAGE) {
         if (!hasLoadMore() && page != FIRST_PAGE) {
             return
         }
