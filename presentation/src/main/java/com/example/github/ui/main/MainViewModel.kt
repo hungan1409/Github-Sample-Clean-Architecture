@@ -26,30 +26,29 @@ class MainViewModel @Inject constructor(
     private val currentList = mutableListOf<ModelItem>()
     private var nextPage = -1
 
-    val items = MediatorLiveData<List<ModelItem>>()
-    val isRefresh = MutableLiveData<Boolean>().apply { value = false }
-
-    init {
-        items.addSource(user) { userItem ->
+    val items = MediatorLiveData<List<ModelItem>>().apply {
+        addSource(user) { userItem ->
             clearToRefresh()
             currentList.add(0, userItem)
-            items.value = currentList.toList()
+            value = currentList.toList()
         }
 
-        items.addSource(currentPage) { page ->
+        addSource(currentPage) { page ->
             if (page != null && page != FIRST_PAGE) {
                 clearToRefresh()
                 currentList.add(PageHeaderItem(page))
-                items.value = currentList.toList()
+                value = currentList.toList()
             }
         }
 
-        items.addSource(repos) { repoItems ->
+        addSource(repos) { repoItems ->
             clearToRefresh()
             currentList.addAll(repoItems)
-            items.value = currentList.toList()
+            value = currentList.toList()
         }
     }
+
+    val isRefresh = MutableLiveData<Boolean>().apply { value = false }
 
     fun init() {
         getUser()
@@ -79,7 +78,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun getRepos(id: String = USER_ID_DEFAULT, page: Int = FIRST_PAGE) {
-        if (!hasLoadMore() && page != FIRST_PAGE) {
+        if ((nextPage == -1 || isLoading.value == true) && page != FIRST_PAGE) {
             return
         }
         val transformer: SingleTransformer<List<Repo>, List<Repo>> = if (isRefresh.value == false) {
@@ -87,7 +86,6 @@ class MainViewModel @Inject constructor(
         } else {
             RxUtils.applySingleScheduler()
         }
-
         getReposUseCase.createObservable(GetReposUseCase.Params(id, page))
             .compose(transformer)
             .subscribe({
@@ -100,14 +98,9 @@ class MainViewModel @Inject constructor(
                 }
             }, {
                 isRefresh.value = false
-                currentPage.value?.let { currentPage -> nextPage = currentPage + 1 }
                 setThrowable(it)
             })
             .add(this)
-    }
-
-    private fun hasLoadMore(): Boolean {
-        return nextPage != -1 && isLoading.value == false
     }
 
     private fun clearToRefresh() {

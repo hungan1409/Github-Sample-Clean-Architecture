@@ -18,5 +18,5 @@ open class GetReposUseCase @Inject constructor(
         }
     }
 
-    class Params(val id: String, val page: Int)
+    data class Params(val id: String, val page: Int)
 }

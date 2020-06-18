@@ -18,5 +18,5 @@ open class GetUserUseCase @Inject constructor(
         }
     }
 
-    class Params(val id: String)
+    data class Params(val id: String)
 }
