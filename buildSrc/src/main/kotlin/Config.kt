@@ -45,6 +45,7 @@ object Versions {
 
     internal const val circleImageView = "3.1.0"
     internal const val leakCanary = "2.4"
+    internal const val shimmer = "0.5.0"
 }
 
 object Url {
@@ -194,4 +195,8 @@ object Libs {
 
     // LeakCanary
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
+
+    // Shimmer
+    const val shimmer = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
+
 }

@@ -31,6 +31,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startShimmer()
         mainAdapter = MainAdapter { repoItem -> onClickRepo(repoItem) }
         with(viewDataBinding) {
             recycler.adapter = mainAdapter
@@ -45,6 +46,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
             })
 
             swipeRefresh.setOnRefreshListener {
+                startShimmer()
                 viewModel?.refresh()
             }
         }
@@ -59,7 +61,22 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun subscribeUI() = with(viewModel) {
         items.observe(viewLifecycleOwner) {
+            stopShimmer()
             mainAdapter.submitList(it)
+        }
+    }
+
+    private fun startShimmer() {
+        viewDataBinding.apply {
+            shimmerLayout.startShimmer()
+            shimmerLayout.visibility = View.VISIBLE
+        }
+    }
+
+    private fun stopShimmer() {
+        viewDataBinding.apply {
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
         }
     }
 

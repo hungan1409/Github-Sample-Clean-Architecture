@@ -142,4 +142,7 @@ dependencies {
 
     // LeakCanary
     debugImplementation(Libs.leakCanary)
+
+    // Shimmer
+    implementation(Libs.shimmer)
 }
