@@ -87,6 +87,7 @@ class MainViewModel @Inject constructor(
         } else {
             RxUtils.applySingleScheduler()
         }
+
         getReposUseCase.createObservable(GetReposUseCase.Params(id, page))
             .compose(transformer)
             .subscribe({
@@ -106,7 +107,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun hasLoadMore(): Boolean {
-        return nextPage != -1
+        return nextPage != -1 && isLoading.value == false
     }
 
     private fun clearToRefresh() {
