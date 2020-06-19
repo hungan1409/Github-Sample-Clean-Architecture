@@ -58,6 +58,7 @@ Libraries
   * [EasyPermission][95]  is a wrapper library to simplify basic system permissions logic when targeting Android M or higher.
   * [CircleImageView][96]  a fast circular ImageView perfect for profile images.
   * [LeakCanary][97] a memory leak detection library for Android.
+  * [Shimmer][98] an Android library that provides an easy way to add a shimmer effect to any view in your Android app.
 
 
 [0]: https://developer.android.com/jetpack/components
@@ -83,4 +84,5 @@ Libraries
 [94]: https://github.com/square/retrofit
 [95]: https://github.com/googlesamples/easypermissions
 [96]: https://github.com/hdodenhof/CircleImageView
-[97]: https://square.github.io/leakcanary/getting_started/
+[97]: https://square.github.io/leakcanary/getting_started
+[98]: https://facebook.github.io/shimmer-android
