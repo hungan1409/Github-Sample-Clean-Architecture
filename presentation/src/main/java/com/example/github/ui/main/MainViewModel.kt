@@ -58,6 +58,7 @@ class MainViewModel @Inject constructor(
     fun refresh() {
         isRefresh.value = true
         nextPage = -1
+        items.value = emptyList()
         init()
     }
 

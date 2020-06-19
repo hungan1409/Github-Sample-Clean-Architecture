@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finishAfterTransition()
+                }
+            })
         subscribeUI()
         viewModel.init()
     }
@@ -46,8 +53,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
             })
 
             swipeRefresh.setOnRefreshListener {
-                startShimmer()
                 viewModel?.refresh()
+                startShimmer()
             }
         }
     }
