@@ -18,6 +18,7 @@
 
         <activity
             android:name="com.example.github.MainActivity"
+            android:exported="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden|uiMode"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -40,11 +40,11 @@ android {
 
     productFlavors {
         create("develop") {
-            matchingFallbacks = listOf("debug", "qa")
+            matchingFallbacks += listOf("debug", "qa")
         }
 
         create("production") {
-            matchingFallbacks = listOf("release")
+            matchingFallbacks += listOf("release")
         }
     }
 
@@ -100,6 +100,7 @@ dependencies {
     // Binding
     kapt(Libs.daggerProcessor)
     kapt(Libs.daggerCompiler)
+    kapt(Libs.metadataJvm)
 
     // Dagger 2
     implementation(Libs.daggerCore)

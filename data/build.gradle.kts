@@ -37,7 +37,7 @@ android {
         buildConfigField(
             "String",
             "BASIC_AUTH_TOKEN",
-            "\"c0aab26b10ce8e0c8c4e5ded3aa67b62e1c490e2\""
+            "\"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\""
         )
     }
 
