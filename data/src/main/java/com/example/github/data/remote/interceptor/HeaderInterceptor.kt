@@ -15,7 +15,6 @@ class HeaderInterceptor @Inject constructor(
         request = request?.newBuilder()
             ?.addHeader("Content-Type", "application/json")
             ?.addHeader("Accept", "application/json")
-            ?.apply { addHeader("Authorization", "token ${BuildConfig.BASIC_AUTH_TOKEN}") }
             ?.build()
         return chain.proceed(request)
     }

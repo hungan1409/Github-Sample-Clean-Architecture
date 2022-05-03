@@ -34,11 +34,6 @@ android {
 
     libraryVariants.all {
         buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
-        buildConfigField(
-            "String",
-            "BASIC_AUTH_TOKEN",
-            "\"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\""
-        )
     }
 
     compileOptions {
